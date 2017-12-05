@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8C05BA2F1FD6B4A00025538D /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C05BA2E1FD6B49F0025538D /* art.scnassets */; };
 		B04D19781FD696E90014DFDD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04D19771FD696E90014DFDD /* AppDelegate.swift */; };
 		B04D197A1FD696E90014DFDD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04D19791FD696E90014DFDD /* ViewController.swift */; };
 		B04D197D1FD696E90014DFDD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B04D197B1FD696E90014DFDD /* Main.storyboard */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8C05BA2E1FD6B49F0025538D /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		B04D19741FD696E90014DFDD /* appcoda.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = appcoda.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B04D19771FD696E90014DFDD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B04D19791FD696E90014DFDD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 				B04D19771FD696E90014DFDD /* AppDelegate.swift */,
 				B04D19791FD696E90014DFDD /* ViewController.swift */,
 				B04D197B1FD696E90014DFDD /* Main.storyboard */,
+				8C05BA2E1FD6B49F0025538D /* art.scnassets */,
 				B04D197E1FD696E90014DFDD /* Assets.xcassets */,
 				B04D19801FD696E90014DFDD /* LaunchScreen.storyboard */,
 				B04D19831FD696E90014DFDD /* Info.plist */,
@@ -233,6 +236,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B04D19821FD696E90014DFDD /* LaunchScreen.storyboard in Resources */,
+				8C05BA2F1FD6B4A00025538D /* art.scnassets in Resources */,
 				B04D197F1FD696E90014DFDD /* Assets.xcassets in Resources */,
 				B04D197D1FD696E90014DFDD /* Main.storyboard in Resources */,
 			);
@@ -427,7 +431,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = JN3L69B7D2;
 				INFOPLIST_FILE = appcoda/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = n.appcoda;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -441,7 +447,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = JN3L69B7D2;
 				INFOPLIST_FILE = appcoda/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = n.appcoda;
 				PRODUCT_NAME = "$(TARGET_NAME)";
