@@ -8,11 +8,12 @@
 
 import UIKit
 import ARKit
+import SceneKit
 
 class ViewController: UIViewController {
     //Connecting the view
     @IBOutlet var sceneView: ARSCNView!
-
+    let 
     //start world tracking when the view launch
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -27,21 +28,13 @@ class ViewController: UIViewController {
     
     //Create a box
     func addBox(x: Float = 0, y: Float = 0, z: Float = -0.2) {
-//        let box = SCNBox(width: 0.05, height: 0.05, length: 0.05, chamferRadius: 0)
-        let url = URL(fileURLWithPath: "art.scnassets/ship.scn")
-        let coder = NSCoder()
-        let src = SCNSceneSource()
-        let data = Data()
-        let point = CGPoint(from: "art.scnassets/ship.scn" as! Decoder)
-        let src2 = SCNGeometrySource()
-        let box = SCNGeometry(sources: [], elements: nil)
-//        box.sources = "art.scnassets/ship.scn"
-        let boxNode = SCNNode()
-        boxNode.geometry = box
-        
-        //boxNode.geometry = box
-        boxNode.position = SCNVector3(x, y, z)
-        sceneView.scene.rootNode.addChildNode(boxNode)
+        //On trouve la scene
+        let ship          = SCNScene(named: "art.scnassets/ship.scn")!
+        //On trouve les données geometrique de la scene
+        let shipNode      = ship.rootNode.childNode(withName: "ship", recursively: false)!
+        shipNode.position = SCNVector3(x, y+Float(arc4random()%2), z)
+        //On charge l'objet dans dans le node
+        sceneView.scene.rootNode.addChildNode(shipNode)
     }
     
     //Add gesture
@@ -66,7 +59,11 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //Add Scene
+        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        // Set the scene to the view
+        sceneView.scene = scene
+        addBox()
         addBox()
         addTapGestureToSceneView()
         // Do any additional setup after loading the view, typically from a nib.
