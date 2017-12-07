@@ -9,6 +9,7 @@
 import UIKit
 import ARKit
 import SceneKit
+import QuartzCore
 
 class ViewController: UIViewController, ARSCNViewDelegate {
     //Connecting the view
@@ -61,7 +62,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         super.viewDidLoad()
         
         // Set the scene to the view
-        let arene = SCNScene(named: "art.scnassets/ship.scn")!
+        let arene = SCNScene(named: "art.scnassets/terraun-sombre.scn")!
         
         sceneView.scene = arene
         addTapGestureToSceneView()
