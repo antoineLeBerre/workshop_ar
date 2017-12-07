@@ -9,6 +9,7 @@
 import UIKit
 import ARKit
 import SceneKit
+import QuartzCore
 
 class ViewController: UIViewController, ARSCNViewDelegate {
     //Connecting the view
@@ -64,9 +65,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         super.viewDidLoad()
         
         // Set the scene to the view
-        let arene = SCNScene(named: "art.scnassets/terrain.dae")!
-//        let areneNode      = arene.rootNode.childNode(withName: "Camera", recursively: false)!
-        
+        let arene = SCNScene(named: "art.scnassets/terraun-sombre.scn")!
+//        let areneNode = arene.rootNode.childNode(withName: "camera", recursively: false)
 //        areneNode.position = SCNVector3(-15,-4,3)
         sceneView.scene = arene
 //        print(areneNode)
