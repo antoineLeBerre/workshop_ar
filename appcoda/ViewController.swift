@@ -10,10 +10,10 @@ import UIKit
 import ARKit
 import SceneKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, ARSCNViewDelegate {
     //Connecting the view
-    @IBOutlet var sceneView: ARSCNView!
-    let 
+    @IBOutlet weak var sceneView: ARSCNView!
+    
     //start world tracking when the view launch
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -32,7 +32,7 @@ class ViewController: UIViewController {
         let ship          = SCNScene(named: "art.scnassets/ship.scn")!
         //On trouve les données geometrique de la scene
         let shipNode      = ship.rootNode.childNode(withName: "ship", recursively: false)!
-        shipNode.position = SCNVector3(x, y+Float(arc4random()%2), z)
+        shipNode.position = SCNVector3(x, y, z)
         //On charge l'objet dans dans le node
         sceneView.scene.rootNode.addChildNode(shipNode)
     }
@@ -59,14 +59,12 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //Add Scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        
         // Set the scene to the view
-        sceneView.scene = scene
-        addBox()
-        addBox()
+        let arene = SCNScene(named: "art.scnassets/ship.scn")!
+        
+        sceneView.scene = arene
         addTapGestureToSceneView()
-        // Do any additional setup after loading the view, typically from a nib.
     }
 
     override func didReceiveMemoryWarning() {
