@@ -38,12 +38,14 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.scene.rootNode.addChildNode(shipNode)
     }
     
-    //Add gesture
+    //Add gesture de swip
     func addTapGestureToSceneView() {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.didTap(withGestureRecognizer:)))
         sceneView.addGestureRecognizer(tapGestureRecognizer)
     }
     
+    //Fonction permettant lors du lachement du swip invoque la fonction d'ajout de fantome à la pos du lachage du swipe
+    //Si 5 fantomes ne pas appeler l'ajout de fantome
     @objc func didTap(withGestureRecognizer recognizer: UIGestureRecognizer) {
         let tapLocation = recognizer.location(in: sceneView)
         let hitTestResults = sceneView.hitTest(tapLocation)
@@ -58,13 +60,19 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         node.removeFromParentNode()
     }
     
+    //Initialisation du terrain
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Set the scene to the view
         let arene = SCNScene(named: "art.scnassets/terraun-sombre.scn")!
-        
+        //let areneNode = arene.rootNode.childNode(withName: "Landscape", recursively: false)
+        //areneNode?.position = SCNVector3(0,0,0)
+        let rotateAction = SCNAction.rotate(by: 90, around: SCNVector3Make(0,1,0), duration: 3)
+        let moveAction = SCNAction.moveBy(x: 25, y: 0, z: 0, duration: 6)
         sceneView.scene = arene
+//        print(areneNode)
+        //Fonction lancé lors du swipe du fantome
         addTapGestureToSceneView()
     }
 
