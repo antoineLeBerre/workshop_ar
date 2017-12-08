@@ -72,8 +72,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Set the scene to the view
         let arene = SCNScene(named: "art.scnassets/terrain.scn")!
-//        let areneNode = arene.rootNode.childNode(withName: "camera", recursively: false)
-//        areneNode.position = SCNVector3(-15,-4,3)
+        let areneNode = arene.rootNode.childNode(withName: "Landscape", recursively: false)!
+        areneNode.position = SCNVector3(0,0,0)
+//        let
+//        areneNode.physicsBody(type: static, shape: nil)
+        arene.rootNode.addChildNode(areneNode)
         sceneView.scene = arene
 //        print(areneNode)
         //Fonction lancé lors du swipe du fantome
