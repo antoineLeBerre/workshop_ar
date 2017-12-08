@@ -30,9 +30,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     //Create a box
     func addBox(x: Float = 0, y: Float = 0, z: Float = -0.2) {
         //On trouve la scene
-        let ship          = SCNScene(named: "art.scnassets/terrain.scn")!
+        let ship          = SCNScene(named: "art.scnassets/ghosti.scn")!
         //On trouve les données geometrique de la scene
-        let shipNode      = ship.rootNode.childNode(withName: "ship", recursively: false)!
+        let shipNode      = ship.rootNode.childNode(withName: "Layer0_001", recursively: false)!
         shipNode.position = SCNVector3(x, y, z)
         //On charge l'objet dans dans le node
         sceneView.scene.rootNode.addChildNode(shipNode)
@@ -62,6 +62,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             }
             return
         }
+        nbFantome -= 1
         node.removeFromParentNode()
     }
     
@@ -70,7 +71,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         super.viewDidLoad()
         
         // Set the scene to the view
-        let arene = SCNScene(named: "art.scnassets/terraun-sombre.scn")!
+        let arene = SCNScene(named: "art.scnassets/terrain.scn")!
 //        let areneNode = arene.rootNode.childNode(withName: "camera", recursively: false)
 //        areneNode.position = SCNVector3(-15,-4,3)
         sceneView.scene = arene
