@@ -11,14 +11,28 @@ import ARKit
 import SceneKit
 import QuartzCore
 
-class ViewController: UIViewController, ARSCNViewDelegate {
+class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     //Connecting the view
     @IBOutlet weak var sceneView: ARSCNView!
     var nbFantome = 0
+    var arene
+    
     //start world tracking when the view launch
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let configuration = ARWorldTrackingConfiguration()
+        
+        configuration.planeDetection = .horizontal
+
+        let areneNode = arene.rootNode.childNode(withName: "Landscape", recursively: false)!
+        areneNode.position = SCNVector3(0,0,0)
+        //        let
+        //        areneNode.physicsBody(type: static, shape: nil)
+        arene.rootNode.addChildNode(areneNode)
+        sceneView.scene = arene
+
+        //Fonction lancé lors du swipe du fantome
+        addTapGestureToSceneView()sceneView.session.delegate = self
         sceneView.session.run(configuration)
     }
     //Stop world tracking when the view close
@@ -34,6 +48,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         //On trouve les données geometrique de la scene
         let shipNode      = ship.rootNode.childNode(withName: "Layer0_001", recursively: false)!
         shipNode.position = SCNVector3(x, y, z)
+        shipNode.scale = SCNVector3(0.1, 0.1, 0.1)
         //On charge l'objet dans dans le node
         sceneView.scene.rootNode.addChildNode(shipNode)
     }
@@ -71,16 +86,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         super.viewDidLoad()
         
         // Set the scene to the view
-        let arene = SCNScene(named: "art.scnassets/terrain.scn")!
-        let areneNode = arene.rootNode.childNode(withName: "Landscape", recursively: false)!
-        areneNode.position = SCNVector3(0,0,0)
-//        let
-//        areneNode.physicsBody(type: static, shape: nil)
-        arene.rootNode.addChildNode(areneNode)
-        sceneView.scene = arene
-//        print(areneNode)
-        //Fonction lancé lors du swipe du fantome
-        addTapGestureToSceneView()
+        arene = SCNScene(named: "art.scnassets/terrain.scn")!
     }
 
     override func didReceiveMemoryWarning() {
