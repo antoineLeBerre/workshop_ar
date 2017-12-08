@@ -14,7 +14,7 @@ import QuartzCore
 class ViewController: UIViewController, ARSCNViewDelegate {
     //Connecting the view
     @IBOutlet weak var sceneView: ARSCNView!
-    
+    var nbFantome = 0
     //start world tracking when the view launch
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -30,7 +30,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     //Create a box
     func addBox(x: Float = 0, y: Float = 0, z: Float = -0.2) {
         //On trouve la scene
-        let ship          = SCNScene(named: "art.scnassets/ship.scn")!
+        let ship          = SCNScene(named: "art.scnassets/terrain.scn")!
         //On trouve les données geometrique de la scene
         let shipNode      = ship.rootNode.childNode(withName: "ship", recursively: false)!
         shipNode.position = SCNVector3(x, y, z)
@@ -53,7 +53,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             let hitTestResultsWithFeaturePoints = sceneView.hitTest(tapLocation, types: .featurePoint)
             if let hitTestResultWithFeaturePoints = hitTestResultsWithFeaturePoints.first {
                 let translation = hitTestResultWithFeaturePoints.worldTransform.translation
-                addBox(x: translation.x, y: translation.y, z: translation.z)
+                if nbFantome < 5 {
+                    nbFantome += 1
+                    addBox(x: translation.x, y: translation.y, z: translation.z)
+                } else {
+                    return
+                }
             }
             return
         }
