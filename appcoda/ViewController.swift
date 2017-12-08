@@ -15,7 +15,23 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     //Connecting the view
     @IBOutlet weak var sceneView: ARSCNView!
     var nbFantome = 0
-    var arene
+    var arene = SCNScene(named: "art.scnassets/terrain.scn")!
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+
+        guard let planeAnchor = anchor as? ARPlaneAnchor else {return}
+        
+        let areneNode = arene.rootNode.childNode(withName: "Landscape", recursively: false)!
+        areneNode.position = SCNVector3(0,-3,-10)
+        arene.rootNode.addChildNode(areneNode)
+        sceneView.scene = arene
+        
+        areneNode.position = SCNVector3Make(planeAnchor.center.x, planeAnchor.center.y, planeAnchor.center.z)
+        
+        //Fonction lancé lors du swipe du fantome
+        addTapGestureToSceneView()
+        
+        
+    }
     
     //start world tracking when the view launch
     override func viewWillAppear(_ animated: Bool) {
@@ -24,22 +40,29 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         
         configuration.planeDetection = .horizontal
 
-        let areneNode = arene.rootNode.childNode(withName: "Landscape", recursively: false)!
-        areneNode.position = SCNVector3(0,0,0)
-        //        let
-        //        areneNode.physicsBody(type: static, shape: nil)
-        arene.rootNode.addChildNode(areneNode)
-        sceneView.scene = arene
-
-        //Fonction lancé lors du swipe du fantome
-        addTapGestureToSceneView()sceneView.session.delegate = self
+        sceneView.session.delegate = self
         sceneView.session.run(configuration)
+        let currentFrame = sceneView.session.currentFrame
+        var translation = matrix_identity_float4x4
+        let transform = currentFrame!.camera.transform * translation
+        let anchor = ARAnchor(transform: transform)
+        sceneView.session.add(anchor: anchor)
     }
     //Stop world tracking when the view close
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         sceneView.session.pause()
     }
+    
+    /*override func viewDidAppear(_ animated: Bool) {
+        let areneNode = arene?.rootNode.childNode(withName: "Landscape", recursively: false)!
+        areneNode?.position = SCNVector3(0,-3,-10)
+        arene?.rootNode.addChildNode(areneNode!)
+        sceneView.scene = arene!
+        
+        //Fonction lancé lors du swipe du fantome
+        addTapGestureToSceneView()
+    }*/
     
     //Create a box
     func addBox(x: Float = 0, y: Float = 0, z: Float = -0.2) {
@@ -48,7 +71,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         //On trouve les données geometrique de la scene
         let shipNode      = ship.rootNode.childNode(withName: "Layer0_001", recursively: false)!
         shipNode.position = SCNVector3(x, y, z)
-        shipNode.scale = SCNVector3(0.1, 0.1, 0.1)
+        shipNode.scale = SCNVector3(0.001, 0.001, 0.001)
         //On charge l'objet dans dans le node
         sceneView.scene.rootNode.addChildNode(shipNode)
     }
@@ -77,8 +100,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             }
             return
         }
-        nbFantome -= 1
-        node.removeFromParentNode()
+        //nbFantome -= 1
+        //node.removeFromParentNode()
     }
     
     //Initialisation du terrain
@@ -88,6 +111,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         // Set the scene to the view
         arene = SCNScene(named: "art.scnassets/terrain.scn")!
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
