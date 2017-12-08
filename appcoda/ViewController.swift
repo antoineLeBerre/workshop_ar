@@ -15,13 +15,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     //Connecting the view
     @IBOutlet weak var sceneView: ARSCNView!
     var nbFantome = 0
-    var arene
+    var arene: SCNScene?
     
     //start world tracking when the view launch
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let configuration = ARWorldTrackingConfiguration()
-        
         configuration.planeDetection = .horizontal
 
         let areneNode = arene.rootNode.childNode(withName: "Landscape", recursively: false)!
@@ -29,11 +28,17 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         //        let
         //        areneNode.physicsBody(type: static, shape: nil)
         arene.rootNode.addChildNode(areneNode)
-        sceneView.scene = arene
+        sceneView.scene = arene!
 
         //Fonction lancé lors du swipe du fantome
-        addTapGestureToSceneView()sceneView.session.delegate = self
+        addTapGestureToSceneView()
+        sceneView.session.delegate = self
         sceneView.session.run(configuration)
+        let currentFrame = sceneView.session.currentFrame
+        var translation = matrix_identity_float4x4
+        let transform = currentFrame!.camera.transform * translation
+        let anchor = ARAnchor(transform: transform)
+        sceneView.session.add(anchor: anchor)
     }
     //Stop world tracking when the view close
     override func viewWillDisappear(_ animated: Bool) {
