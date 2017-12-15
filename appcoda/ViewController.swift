@@ -4,7 +4,7 @@
 //
 //  Created by eemi on 05/12/2017.
 //  Copyright © 2017 eemi. All rights reserved.
-//
+//  Inspired by : https://www.appcoda.com/arkit-introduction-scenekit/
 
 import UIKit
 import ARKit
@@ -14,6 +14,7 @@ import QuartzCore
 class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     //Connecting the view
     @IBOutlet weak var sceneView: ARSCNView!
+    // Initialisation du nombre de fantome
     var nbFantome = 0
     var arene:SCNScene?
     
@@ -34,13 +35,16 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         sceneView.session.pause()
     }
     
+    // Create scene when the application appear
     override func viewDidAppear(_ animated: Bool) {
+        // Ajout de la node landscape de l'arene
         let areneNode = arene?.rootNode.childNode(withName: "Landscape", recursively: false)!
         areneNode?.position = SCNVector3(0,-3,-10)
         arene?.rootNode.addChildNode(areneNode!)
+        // Ajout de l'arene dans la scene
         sceneView.scene = arene!
         
-        //Fonction lancé lors du swipe du fantome
+        //Fonction lancé lors du tap sur l'écran
         addTapGestureToSceneView()
     }
     
@@ -49,7 +53,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     func addBox(x: Float = 0, y: Float = 0, z: Float = -0.2) {
         //On trouve la scene
         let ship          = SCNScene(named: "art.scnassets/ghosti.scn")!
-        //On trouve les données geometrique de la scene
+        //On recupere le node du fantome
         let shipNode      = ship.rootNode.childNode(withName: "Layer0_001", recursively: false)!
         shipNode.position = SCNVector3(x, y, z)
         shipNode.scale = SCNVector3(0.001, 0.001, 0.001)
@@ -57,7 +61,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         sceneView.scene.rootNode.addChildNode(shipNode)
     }
     
-    //Add gesture de swip
+    //Add gesture du click
     func addTapGestureToSceneView() {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.didTap(withGestureRecognizer:)))
         sceneView.addGestureRecognizer(tapGestureRecognizer)
@@ -89,7 +93,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Set the scene to the view
+        // on met le terran dans la variable arene
         arene = SCNScene(named: "art.scnassets/terrain.scn")!
     }
 
